@@ -60,7 +60,12 @@ function output(obj, json) {
 		return bus.LastStop;
 	});
 	
-	var message = "The buses are at " + busStops.join(", ");
-    
+	var message = "";
+	if(busStops.length > 0) {
+		message = "The buses are at " + busStops.join(", ");
+	} else {
+		message = "There are no buses operating right now.";
+	}
+	    
     obj.emit(':tellWithCard', message, obj.t("SKILL_NAME"), message);
 }
