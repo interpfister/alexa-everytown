@@ -6,9 +6,9 @@ var APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
 var languageStrings = {    
     "en-US": {
         "translation": {            
-            "SKILL_NAME" : "GiveDirectly (unofficial)",
-            "HELP_MESSAGE" : "Ask me how GiveDirectly helped today!",
-            "HELP_REPROMPT" : "Ask how recipients used their transfers.",
+            "SKILL_NAME" : "Blue Loop (unofficial)",
+            "HELP_MESSAGE" : "Ask me where the blue loop is!",
+            "HELP_REPROMPT" : "Ask me where the blue loop is!",
             "STOP_MESSAGE" : "Goodbye!"
         }
     }    
@@ -27,15 +27,11 @@ var handlers = {
     'LaunchRequest': function () {
         this.emit('GetPersonHelped');
     },
-    'GetPersonHelpedIntent': function () {
-        this.emit('GetPersonHelped');
+    'GetBlueLoopLocationsIntent': function () {
+        this.emit('GetBlueLoopLocations');
     },      
-    'GetPersonHelped': function () {
-        outputResult(this, function(results) {
-            console.log(results);
-            var index = Math.floor(Math.random() * results.length);
-            return results[index];
-        });
+    'GetBlueLoopLocations': function () {
+		outputResult(this);
     },    
     'AMAZON.HelpIntent': function () {
         var speechOutput = this.t("HELP_MESSAGE");
@@ -51,17 +47,20 @@ var handlers = {
 };
 
 function outputResult(obj, findFunction) {
-    request('https://www.givedirectly.org/newsfeed.json', function (error, response, body) {
+    request('http://m.psu.edu/shuttleschedule/scripts/vehicle_proxy.php?busid=1', function (error, response, body) {
       if (!error && response.statusCode == 200) {
         var json = JSON.parse(body);
-        var elem = findFunction(json);
-        output(obj, elem);
+        output(obj, json);
       }
     });
 }
 
-function output(obj, elem) {
-    var message = elem.surveyPreview.response;
+function output(obj, json) {
+    var busStops = json.map(function(bus) {
+		return bus.LastStop;
+	});
+	
+	var message = "The buses are at " + busStops.join(", ");
     
     obj.emit(':tellWithCard', message, obj.t("SKILL_NAME"), message);
 }
