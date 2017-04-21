@@ -25,7 +25,7 @@ exports.handler = function(event, context, callback) {
 
 var handlers = {
     'LaunchRequest': function () {
-        this.emit('GetPersonHelped');
+        this.emit('GetBlueLoopLocations');
     },
     'GetBlueLoopLocationsIntent': function () {
         this.emit('GetBlueLoopLocations');
