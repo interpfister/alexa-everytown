@@ -1,3 +1,3 @@
-Alexa Skill for Give Directly (https://www.givedirectly.org/)
+Alexa Skill for Everytown For Gun Safety (https://everytown.org/)
 
-It has one feature to ask how Give Directly helped that day. Data is pulled from the GDLive API.
+It has one feature to ask for a gun safety fact. Facts are pulled from: http://everytownresearch.org/gun-violence-by-the-numbers/
