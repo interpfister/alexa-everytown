@@ -6,7 +6,7 @@ var APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
 var languageStrings = {    
     "en-US": {
         "translation": {            
-            "SKILL_NAME" : "Everytown Gun Facts (unofficial)",
+            "SKILL_NAME" : "Gun Safety Facts",
             "HELP_MESSAGE" : "Ask me for a fact about gun safety!",
             "HELP_REPROMPT" : "Say: give me a fact",
             "STOP_MESSAGE" : "Goodbye!"

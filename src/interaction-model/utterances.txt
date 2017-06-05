@@ -1,3 +1,4 @@
-GetPersonHelpedIntent how did GiveDirectly help today
-GetPersonHelpedIntent how did recipients use the transfer
-GetPersonHelpedIntent what did they do with the money
+GetFactIntent Give me a fact
+GetFactIntent Give me a fact about gun safety
+GetFactIntent What's a fact a fact about gun violence
+GetFactIntent Give me a fact about guns
