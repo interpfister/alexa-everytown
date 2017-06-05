@@ -6,14 +6,26 @@ var APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
 var languageStrings = {    
     "en-US": {
         "translation": {            
-            "SKILL_NAME" : "Blue Loop (unofficial)",
-            "HELP_MESSAGE" : "Ask me where the blue loop is!",
-            "HELP_REPROMPT" : "Ask me where the blue loop is!",
+            "SKILL_NAME" : "Everytown Gun Facts (unofficial)",
+            "HELP_MESSAGE" : "Ask me for a fact about gun safety!",
+            "HELP_REPROMPT" : "Say: give me a fact",
             "STOP_MESSAGE" : "Goodbye!"
         }
     }    
 };
 
+var gunFacts = [
+  "On an average day, 93 Americans are killed with guns.",
+  "On average there nearly 12,000 gun homicides a year in the United States.",
+  "For every one person killed with guns, two more people are injured.",
+  "62% of firearm deaths in the United States are suicides.",
+  "Seven children and teens are killed with guns in the United States on an average day.",
+  "In an average month, 50 women are shot to death by intimate partners in the United States.",
+  "America's gun homicide rate is more than 25 times the average of other developed countries.",
+  "Background checks have blocked nearly 3 million gun sales to prohibited people.",
+  "Black men are 14 times more likely than white men to be shot and killed with guns.",
+  "The presence of a gun in a domestic violence situation increases the risk of the women being shot and killed by five times."
+];
 exports.handler = function(event, context, callback) {
     var alexa = Alexa.handler(event, context);
     alexa.APP_ID = APP_ID;
@@ -25,13 +37,13 @@ exports.handler = function(event, context, callback) {
 
 var handlers = {
     'LaunchRequest': function () {
-        this.emit('GetBlueLoopLocations');
+        this.emit('GetFact');
     },
-    'GetBlueLoopLocationsIntent': function () {
-        this.emit('GetBlueLoopLocations');
+    'GetFactIntent': function () {
+        this.emit('GetFact');
     },      
-    'GetBlueLoopLocations': function () {
-		outputResult(this);
+    'GetFact': function () {
+      outputResult(this);
     },    
     'AMAZON.HelpIntent': function () {
         var speechOutput = this.t("HELP_MESSAGE");
@@ -46,26 +58,8 @@ var handlers = {
     }
 };
 
-function outputResult(obj, findFunction) {
-    request('http://m.psu.edu/shuttleschedule/scripts/vehicle_proxy.php?busid=1', function (error, response, body) {
-      if (!error && response.statusCode == 200) {
-        var json = JSON.parse(body);
-        output(obj, json);
-      }
-    });
-}
-
-function output(obj, json) {
-    var busStops = json.map(function(bus) {
-		return bus.LastStop;
-	});
-	
-	var message = "";
-	if(busStops.length > 0) {
-		message = "The buses are at " + busStops.join(", ");
-	} else {
-		message = "There are no buses operating right now.";
-	}
-	    
+function outputResult(obj) {
+    var message = gunFacts[Math.floor(Math.random()*gunFacts.length)];
+    
     obj.emit(':tellWithCard', message, obj.t("SKILL_NAME"), message);
 }
